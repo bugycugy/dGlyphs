@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dialog_background_grey">#2C2B30</color>
-    <color name="on_surface_white">#E6E1E5</color>
+    <color name="gray_inactive_track">#33FFFFFF</color>
+    <color name="gray_inactive_thumb">#353537</color>
+    <color name="gray_active_thumb">#666666</color>
 </resources>

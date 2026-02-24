@@ -1,5 +1,10 @@
 <resources>
     <style name="Base.Theme.DGlyphs" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">#F2F2F2</item>
+        <item name="colorOnSurface">#000000</item>
+        <item name="colorOutline">#99000000</item>
+        <item name="colorSurfaceVariant">#FFFFFF</item>
+        <item name="colorPrimary">#000000</item>
     </style>
     <style name="Theme.DGlyphs" parent="Base.Theme.DGlyphs" />
 </resources>
