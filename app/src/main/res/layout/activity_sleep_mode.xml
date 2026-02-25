@@ -79,7 +79,7 @@
 		android:id="@+id/btnStartTime"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="16dp"
+		android:layout_marginTop="24dp"
 		android:layout_marginStart="12dp"
 		android:orientation="vertical"
 		android:clickable="true"
@@ -139,7 +139,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="26dp"
+		android:layout_marginTop="24dp"
 		android:orientation="horizontal"
 		android:gravity="center">
 
