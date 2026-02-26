@@ -5,7 +5,8 @@
 	android:layout_height="match_parent"
 	android:background="?android:attr/windowBackground"
 	android:orientation="vertical"
-	android:padding="16dp">
+	android:padding="16dp"
+	android:fitsSystemWindows="true" >
 
 	<ImageButton
 		android:id="@+id/btnBack"
