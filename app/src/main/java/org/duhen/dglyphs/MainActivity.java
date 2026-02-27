@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MaterialCardView cardNotifications, cardRingtones, cardFlipStyle, cardTurnOff, cardSleepTime, cardBrightness;
     private TextView textCurrentCallStyle, textCurrentNotifStyle, textCurrentFlipStyle, textSleepTime;
-    private MaterialSwitch switchSleepMode, switchAll, switchFlip;
+    private MaterialSwitch switchSleepMode, switchAll, switchFlip, switchBattery;
     private Slider slider;
     private final android.os.Handler previewHandler = new android.os.Handler(android.os.Looper.getMainLooper());
     private Runnable previewRunnable;
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         switchLockscreenOnly = findViewById(R.id.switchLockscreenOnly);
         textSleepTime = findViewById(R.id.textSleepTime);
         spacewar = findViewById(R.id.spacewar);
+        switchBattery = findViewById(R.id.switchBattery);
     }
 
     private void setupInitialState() {
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         switchFlip.setEnabled(isMasterAllowed);
         switchLockscreenOnly.setChecked(prefs.getBoolean("lockscreen_only", false));
         switchSleepMode.setChecked(prefs.getBoolean("sleep_mode_enabled", false));
+        switchBattery.setChecked(prefs.getBoolean("battery_glyph_enabled", false));
+        switchBattery.setEnabled(isMasterAllowed);
         updateStyleLabels();
         updateCardStates(isMasterAllowed);
         updateSleepTimeLabel();
@@ -122,6 +125,14 @@ public class MainActivity extends AppCompatActivity {
         switchSleepMode.setOnCheckedChangeListener((v, isChecked) -> {
             quickTick(20, 100);
             prefs.edit().putBoolean("sleep_mode_enabled", isChecked).apply();
+        });
+
+        switchBattery.setOnCheckedChangeListener((v, isChecked) -> {
+            quickTick(15, 100);
+            prefs.edit().putBoolean("battery_glyph_enabled", isChecked).apply();
+            Intent intent = new Intent(this, BatteryGlyphService.class);
+            if (isChecked && isMasterAllowed) startService(intent);
+            else stopService(intent);
         });
 
         switchLockscreenOnly.setOnCheckedChangeListener((v, isChecked) -> {
@@ -156,8 +167,12 @@ public class MainActivity extends AppCompatActivity {
             if (!isChecked) {
                 updateHardware(0);
                 stopService(new Intent(this, FlipToGlyphService.class));
-            } else if (prefs.getBoolean("flip_enabled", false)) {
-                startService(new Intent(this, FlipToGlyphService.class));
+                stopService(new Intent(this, BatteryGlyphService.class));
+            } else {
+                if (prefs.getBoolean("flip_enabled", false))
+                    startService(new Intent(this, FlipToGlyphService.class));
+                if (prefs.getBoolean("battery_glyph_enabled", false))
+                    startService(new Intent(this, BatteryGlyphService.class));
             }
             updateTile();
         });
@@ -255,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView[] cards = {cardNotifications, cardRingtones, cardBrightness, cardFlipStyle, cardSleepTime, cardTurnOff};
         for (MaterialCardView c : cards) { c.setEnabled(enabled); c.setAlpha(alpha); }
         switchSleepMode.setEnabled(enabled);
+        switchBattery.setEnabled(enabled);
     }
 
     private void quickTick(int d, int a) {

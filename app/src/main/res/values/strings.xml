@@ -66,4 +66,6 @@
     <string name="day_sunday">S</string>
     <string name="turn_off_label">Only when the screen is off</string>
     <string name="turn_off_desc">Glyph lights will not work if the phone is unlocked</string>
+    <string name="battery_glyph_label">Battery Glyph</string>
+    <string name="battery_glyph_desc">Glyph brightness shows battery level while charging</string>
 </resources>

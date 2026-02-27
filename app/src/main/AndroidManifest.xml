@@ -66,6 +66,9 @@
             </intent-filter>
         </service>
 
+        <service android:name=".BatteryGlyphService" />
+
+
         <receiver
             android:name=".CallReceiver"
             android:exported="true">
