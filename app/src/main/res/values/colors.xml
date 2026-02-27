@@ -2,7 +2,4 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gray_inactive_track">#33FFFFFF</color>
-    <color name="gray_inactive_thumb">#353537</color>
-    <color name="gray_active_thumb">#666666</color>
 </resources>

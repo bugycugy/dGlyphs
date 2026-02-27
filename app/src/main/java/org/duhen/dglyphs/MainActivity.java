@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        com.google.android.material.color.DynamicColors.applyToActivityIfAvailable(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

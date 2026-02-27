@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
+    android:background="?attr/colorSurface"
     android:fillViewport="true"
     android:fitsSystemWindows="true">
 
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardBackgroundColor="?attr/colorSurfaceContainer"
                 app:cardCornerRadius="28dp"
                 app:strokeWidth="0dp">
 
@@ -52,7 +52,7 @@
                         android:layout_marginBottom="16dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_glyph_outline"
-                        app:tint="?attr/colorOnSurface" />
+                        app:tint="?attr/colorOnSurfaceVariant" />
 
                     <com.google.android.material.slider.Slider
                         android:id="@+id/sliderMain"
@@ -65,7 +65,7 @@
                         app:labelBehavior="gone"
                         app:thumbColor="?attr/colorPrimary"
                         app:trackColorActive="?attr/colorPrimary"
-                        app:trackColorInactive="?attr/colorOutline" />
+                        app:trackColorInactive="?attr/colorSurfaceVariant" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -81,7 +81,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="6dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                    app:cardBackgroundColor="?attr/colorSurfaceContainer"
                     app:cardCornerRadius="28dp"
                     app:strokeWidth="0dp">
 
@@ -123,7 +123,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="6dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                    app:cardBackgroundColor="?attr/colorSurfaceContainer"
                     app:cardCornerRadius="28dp"
                     app:strokeWidth="0dp">
 
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="6dp"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
             app:cardCornerRadius="28dp"
             app:strokeWidth="0dp">
 
@@ -182,18 +182,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/master_switch_label"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="?attr/colorOnPrimaryContainer"
                     android:textSize="18sp" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchAll"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    app:useMaterialThemeColors="false"
-                    app:thumbTint="?attr/colorOnSurface"
-                    app:trackTint="@color/gray_active_thumb"
-                    app:rippleColor="@color/white" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -203,7 +198,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="20dp"
             android:text="@string/features"
-            android:textColor="?attr/colorOutline"
+            android:textColor="?attr/colorPrimary"
             android:textSize="12sp" />
 
         <com.google.android.material.card.MaterialCardView
@@ -212,7 +207,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="6dp"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardBackgroundColor="?attr/colorSurfaceContainer"
             app:cardCornerRadius="28dp"
             app:strokeWidth="0dp">
 
@@ -242,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="@string/flip_to_glyph_desc"
-                        android:textColor="?attr/colorOutline"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:textSize="13sp" />
 
                     <TextView
@@ -257,21 +252,17 @@
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchFlip"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:useMaterialThemeColors="false"
-                    app:thumbTint="?attr/colorOnSurface"
-                    app:trackTint="@color/gray_active_thumb"
-                    app:rippleColor="@color/white" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-			android:id="@+id/cardTurnOff"
+            android:id="@+id/cardTurnOff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="6dp"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardBackgroundColor="?attr/colorSurfaceContainer"
             app:cardCornerRadius="28dp"
             app:strokeWidth="0dp">
 
@@ -300,16 +291,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="@string/turn_off_desc"
-                        android:textColor="?attr/colorOutline"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:textSize="13sp" />
                 </LinearLayout>
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchLockscreenOnly"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:thumbTint="?attr/colorOnSurface"
-                    app:trackTint="@color/gray_active_thumb" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -319,7 +308,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="20dp"
             android:text="@string/schedule"
-            android:textColor="?attr/colorOutline"
+            android:textColor="?attr/colorPrimary"
             android:textSize="12sp" />
 
         <com.google.android.material.card.MaterialCardView
@@ -329,7 +318,7 @@
             android:layout_marginHorizontal="6dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="32dp"
-            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardBackgroundColor="?attr/colorSurfaceContainer"
             app:cardCornerRadius="28dp"
             app:strokeWidth="0dp">
 
@@ -359,17 +348,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="23:00 — 07:00"
-                        android:textColor="?attr/colorOutline"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:textSize="13sp" />
                 </LinearLayout>
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchSleepMode"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:thumbTint="?attr/colorOnSurface"
-                    app:trackTint="@color/gray_active_thumb"
-                    app:rippleColor="@color/white" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -384,7 +370,6 @@
             <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:alpha="0.75"
                 android:src="@drawable/ic_warning"
                 app:tint="?attr/colorOnSurface" />
 
@@ -392,10 +377,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:alpha="0.75"
+                android:alpha="0.8"
                 android:lineSpacingMultiplier="1.25"
                 android:text="@string/warning"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>

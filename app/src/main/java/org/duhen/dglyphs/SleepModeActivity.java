@@ -2,16 +2,19 @@ package org.duhen.dglyphs;
 
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.color.DynamicColors;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +26,7 @@ public class SleepModeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DynamicColors.applyToActivityIfAvailable(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_mode);
 
@@ -56,18 +60,28 @@ public class SleepModeActivity extends AppCompatActivity {
             MaterialButton btn = findViewById(ids[i]);
             String dId = String.valueOf(i + 1);
             updateDayUI(btn, selectedDays.contains(dId));
+
             btn.setOnClickListener(v -> {
                 quickTick(10, 80);
-                if (!selectedDays.remove(dId)) selectedDays.add(dId);
+                if (selectedDays.contains(dId)) selectedDays.remove(dId);
+                else selectedDays.add(dId);
+
                 updateDayUI(btn, selectedDays.contains(dId));
-                prefs.edit().putStringSet("sleep_days", selectedDays).apply();
+                prefs.edit().putStringSet("sleep_days", new HashSet<>(selectedDays)).apply();
             });
         }
     }
 
     private void updateDayUI(MaterialButton btn, boolean sel) {
-        btn.setBackgroundTintList(ColorStateList.valueOf(sel ? Color.WHITE : Color.parseColor("#acaaab")));
-        btn.setTextColor(sel ? Color.BLACK : Color.WHITE);
+        int colorBg = MaterialColors.getColor(btn, sel ?
+                com.google.android.material.R.attr.colorPrimaryContainer :
+                com.google.android.material.R.attr.colorSurfaceContainerHigh);
+        int colorTxt = MaterialColors.getColor(btn, sel ?
+                com.google.android.material.R.attr.colorSurface :
+                com.google.android.material.R.attr.colorOnSurfaceVariant);
+
+        btn.setBackgroundTintList(ColorStateList.valueOf(colorBg));
+        btn.setTextColor(colorTxt);
     }
 
     private void showPicker(boolean isStart) {
