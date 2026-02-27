@@ -1,4 +1,5 @@
 <resources>
+
     <style name="Base.Theme.DGlyphs" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">#F2F2F2</item>
         <item name="colorOnSurface">#000000</item>

@@ -1,189 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="?android:attr/windowBackground"
-	android:orientation="vertical"
-	android:padding="16dp"
-	android:fitsSystemWindows="true" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:fitsSystemWindows="true">
 
-	<ImageButton
-		android:id="@+id/btnBack"
-		android:layout_width="48dp"
-		android:layout_height="48dp"
-		android:layout_marginTop="32dp"
-		android:background="?attr/selectableItemBackgroundBorderless"
-		android:src="@drawable/ic_arrow_back"
-		app:tint="?attr/colorOnSurface" />
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="?attr/colorOnSurface" />
 
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="64dp"
-		android:fontFamily="@font/ndot_57"
-		android:text="@string/sleep_schedule_title"
-		android:textColor="?attr/colorOnSurface"
-		android:textSize="40sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/ndot_57"
+        android:text="@string/sleep_schedule_title"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="40sp" />
 
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="12dp"
-		android:alpha="0.7"
-		android:text="@string/sleep_schedule_desc"
-		android:textColor="?attr/colorOnSurface"
-		android:textSize="14sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:alpha="0.7"
+        android:text="@string/sleep_schedule_desc"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="14sp" />
 
-	<com.google.android.material.card.MaterialCardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="32dp"
-		app:cardBackgroundColor="?attr/colorSurfaceVariant"
-		app:cardCornerRadius="28dp"
-		app:strokeWidth="0dp">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardCornerRadius="28dp"
+        app:strokeWidth="0dp">
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:padding="24dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:text="@string/sleep_mode"
-				android:textColor="?attr/colorOnSurface"
-				android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/sleep_mode"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="18sp" />
 
-			<com.google.android.material.materialswitch.MaterialSwitch
-				android:id="@+id/switchSleepInternal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentEnd="true"
-				app:thumbTint="?attr/colorOnSurface"
-				app:trackTint="@color/gray_active_thumb"
-				app:rippleColor="@color/white" />
-		</RelativeLayout>
-	</com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switchSleepInternal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                app:thumbTint="?attr/colorOnSurface"
+                app:trackTint="@color/gray_active_thumb"
+                app:rippleColor="@color/white" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="32dp"
-		android:layout_marginStart="12dp"
-		android:text="@string/sleep_time_section"
-		android:textColor="?attr/colorOutline"
-		android:textSize="12sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="12dp"
+        android:text="@string/sleep_time_section"
+        android:textColor="?attr/colorOutline"
+        android:textSize="12sp" />
 
-	<LinearLayout
-		android:id="@+id/btnStartTime"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="24dp"
-		android:layout_marginStart="12dp"
-		android:orientation="vertical"
-		android:clickable="true"
-		android:focusable="true">
-		
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/sleep_picker_start"
-			android:textColor="?attr/colorOnSurface"
-			android:textSize="16sp" />
-		
-		<TextView
-			android:id="@+id/tvStartTime"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="23:00"
-			android:alpha="0.6"
-			android:textColor="?attr/colorOnSurface" />
-	</LinearLayout>
+    <LinearLayout
+        android:id="@+id/btnStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
 
-	<LinearLayout
-		android:id="@+id/btnEndTime"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="24dp"
-		android:layout_marginStart="12dp"
-		android:orientation="vertical"
-		android:clickable="true"
-		android:focusable="true">
-		
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/sleep_picker_end"
-			android:textColor="?attr/colorOnSurface"
-			android:textSize="16sp" />
-		
-		<TextView
-			android:id="@+id/tvEndTime"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="07:00"
-			android:alpha="0.6"
-			android:textColor="?attr/colorOnSurface" />
-	</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sleep_picker_start"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="32dp"
-		android:layout_marginStart="12dp"
-		android:text="@string/sleep_repeat_section"
-		android:textColor="?attr/colorOutline"
-		android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tvStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23:00"
+            android:alpha="0.6"
+            android:textColor="?attr/colorOnSurface" />
+    </LinearLayout>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="24dp"
-		android:orientation="horizontal"
-		android:gravity="center">
+    <LinearLayout
+        android:id="@+id/btnEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_1"
-			style="@style/DayButtonStyle"
-			android:layout_marginEnd="8dp"
-			android:text="@string/day_monday" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sleep_picker_end"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_2"
-			style="@style/DayButtonStyle"
-			android:layout_marginEnd="8dp"
-			android:text="@string/day_tuesday" />
+        <TextView
+            android:id="@+id/tvEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="07:00"
+            android:alpha="0.6"
+            android:textColor="?attr/colorOnSurface" />
+    </LinearLayout>
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_3"
-			style="@style/DayButtonStyle"
-			android:layout_marginEnd="8dp"
-			android:text="@string/day_wednesday" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="12dp"
+        android:text="@string/sleep_repeat_section"
+        android:textColor="?attr/colorOutline"
+        android:textSize="12sp" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_4"
-			style="@style/DayButtonStyle"
-			android:layout_marginEnd="8dp"
-			android:text="@string/day_thursday" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_5"
-			style="@style/DayButtonStyle"
-			android:layout_marginEnd="8dp"
-			android:text="@string/day_friday" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_1"
+            style="@style/DayButtonStyle"
+            android:layout_marginEnd="8dp"
+            android:text="@string/day_monday" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_6"
-			style="@style/DayButtonStyle"
-			android:layout_marginEnd="8dp"
-			android:text="@string/day_saturday" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_2"
+            style="@style/DayButtonStyle"
+            android:layout_marginEnd="8dp"
+            android:text="@string/day_tuesday" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/day_7"
-			style="@style/DayButtonStyle"
-			android:text="@string/day_sunday" />
-	</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_3"
+            style="@style/DayButtonStyle"
+            android:layout_marginEnd="8dp"
+            android:text="@string/day_wednesday" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_4"
+            style="@style/DayButtonStyle"
+            android:layout_marginEnd="8dp"
+            android:text="@string/day_thursday" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_5"
+            style="@style/DayButtonStyle"
+            android:layout_marginEnd="8dp"
+            android:text="@string/day_friday" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_6"
+            style="@style/DayButtonStyle"
+            android:layout_marginEnd="8dp"
+            android:text="@string/day_saturday" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/day_7"
+            style="@style/DayButtonStyle"
+            android:text="@string/day_sunday" />
+    </LinearLayout>
 
 </LinearLayout>
