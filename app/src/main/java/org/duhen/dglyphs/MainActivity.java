@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isMasterAllowed;
     private int currentBrightness;
 
-    private MaterialCardView cardNotifications, cardRingtones, cardFlipStyle, cardSleepTime, cardBrightness;
+    private MaterialCardView cardNotifications, cardRingtones, cardFlipStyle, cardTurnOff, cardSleepTime, cardBrightness;
     private TextView textCurrentCallStyle, textCurrentNotifStyle, textCurrentFlipStyle, textSleepTime;
     private MaterialSwitch switchSleepMode, switchAll, switchFlip;
     private Slider slider;
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         cardNotifications = findViewById(R.id.cardNotifications);
         cardRingtones = findViewById(R.id.cardRingtones);
         cardFlipStyle = findViewById(R.id.cardFlipStyle);
+        cardTurnOff = findViewById(R.id.cardTurnOff);
         cardSleepTime = findViewById(R.id.cardSleepTime);
         cardBrightness = findViewById(R.id.cardBrightness);
         textCurrentCallStyle = findViewById(R.id.textCurrentCallStyle);
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateCardStates(boolean enabled) {
         float alpha = enabled ? 1.0f : 0.5f;
-        MaterialCardView[] cards = {cardNotifications, cardRingtones, cardBrightness, cardFlipStyle, cardSleepTime};
+        MaterialCardView[] cards = {cardNotifications, cardRingtones, cardBrightness, cardFlipStyle, cardSleepTime, cardTurnOff};
         for (MaterialCardView c : cards) { c.setEnabled(enabled); c.setAlpha(alpha); }
         switchSleepMode.setEnabled(enabled);
     }
