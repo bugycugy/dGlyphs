@@ -276,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
         }
         switchSleepMode.setEnabled(enabled);
         switchBattery.setEnabled(enabled);
+        switchLockscreenOnly.setEnabled(enabled);
     }
 
     private void quickTick(int d, int a) {
