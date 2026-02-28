@@ -66,6 +66,6 @@
     <string name="day_sunday">S</string>
     <string name="turn_off_label">Только при выкл. экране</string>
     <string name="turn_off_desc">Glyph индикаторы не будут работать, если телефон разблокирован</string>
-    <string name="battery_glyph_label">Glyph баттарея</string>
+    <string name="battery_glyph_label">Glyph батарея</string>
     <string name="battery_glyph_desc">Яркость Glyph отображает уровень заряда при подключении зарядки</string>
 </resources>
