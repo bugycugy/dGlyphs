@@ -12,8 +12,8 @@ android {
         applicationId "org.duhen.dglyphs"
         minSdk 33
         targetSdk 36
-        versionCode 1
-        versionName "1.1"
+        versionCode 20
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
