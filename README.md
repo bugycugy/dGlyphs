@@ -10,8 +10,9 @@ It was originally created for ported roms that don't have Glyphs.
 - Call/notifications/Flip to Glyph styles
 - Flip to Glyph
 - QS tiles
+- Battery Glyph
 - Sleep mode
-- Nice UI =)
+- Monet theme and nice UI =)
 
 ## Screenshots (2.0)
 <table>
