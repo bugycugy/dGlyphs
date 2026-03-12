@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name" translatable="false">dGlyphs</string>
+    <string name="main_header">Glyph Arayüzü</string>
+    <string name="card_ringtones">Zil Sesleri</string>
+    <string name="card_notifications">Bildirimler</string>
+    <string name="master_switch_label">Glyph Işıkları</string>
+    <string name="tile_master_label">Glyphs</string>
+    <string name="tile_light_label">Glyph Işığı</string>
+    <string name="flip_to_glyph_label">Glyph için Çevir</string>
+    <string name="flip_to_glyph_desc">Bildirimleri sessize almak ve Glyph yanıp sönmelerini kullanmak için telefonu yüzüstü bırakın</string>
+    <string name="pref_file">Glyph Ayarları</string>
+    <string name="style_title">Bildirim Stili</string>
+    <string name="apply">Uygula</string>
+    <string name="cancel">İptal</string>
+    
+    <string-array name="notif_style_names">
+        <item>Sabit</item>
+        <item>Nabız</item>
+        <item>Nothing Nabız</item>
+        <item>Hızlı Göz Kırpma</item>
+        <item>Oi!</item>
+        <item>Hayır</item>
+        <item>Niye?</item>
+        <item>Ampul Bir</item>
+        <item>Ampul İki</item>
+        <item>Guiro</item>
+        <item>Karalama</item>
+    </string-array>
+
+    <string-array name="call_style_names">
+        <item>Sabit</item>
+        <item>Göz Kırpma</item>
+        <item>Pnömatik</item>
+        <item>Abra</item>
+        <item>Sincaplar</item>
+        <item>Şık</item>
+        <item>Işıma</item>
+        <item>Tenis</item>
+        <item>Kurgu</item>
+        <item>Karalama</item>
+    </string-array>
+
+    <string name="root_error_title">Root Hatası</string>
+    <string name="root_error_message">Bu uygulama çalışmak için root yetkisi gerektirir. Lütfen root erişimi verin ve uygulamayı yeniden başlatın.</string>
+    <string name="exit">Çıkış</string>
+    <string name="features">Özellikler</string>
+    <string name="schedule">Program</string>
+    <string name="sleep_mode">Uyku modu</string>
+    <string name="sleep_picker_start">Başlangıç saati</string>
+    <string name="sleep_picker_end">Bitiş saati</string>
+    <string name="sleep_time_format">%1$s — %2$s</string>
+    <string name="dialog_permission_notif_title">Bildirim Erişimi</string>
+    <string name="dialog_permission_notif_message">Yeni mesaj geldiğinde Glyph aydınlatmasını kontrol edebilmek için uygulamanın bildirim erişimine ihtiyacı var.</string>
+    <string name="dialog_permission_call_title">Telefon Çağrı Erişimi</string>
+    <string name="dialog_permission_call_message">Bu, gelen arama sırasında Glyph arayüzünün çalışması için gereklidir.</string>
+    <string name="btn_settings">Ayarlar</string>
+    <string name="btn_grant">Yetki Ver</string>
+    <string name="warning">Glyph Arayüzü, epilepsi ve ışığa duyarlılığı olan kişiler için güvenli olmayabilir.</string>
+    <string name="sleep_schedule_title">Uyku programı</string>
+    <string name="sleep_schedule_desc">Glyph ışıklarını belirli bir saatte kapanacak şekilde programlama</string>
+    <string name="sleep_time_section">Zaman</string>
+    <string name="sleep_repeat_section">Tekrarla</string>
+    <string name="day_monday">Pt</string>
+    <string name="day_tuesday">Sa</string>
+    <string name="day_wednesday">Ça</string>
+    <string name="day_thursday">Pe</string>
+    <string name="day_friday">Cu</string>
+    <string name="day_saturday">Ct</string>
+    <string name="day_sunday">Pz</string>
+    <string name="turn_off_label">Yalnızca ekran kapalıyken</string>
+    <string name="turn_off_desc">Telefon kilidi açıkken Glyph ışıkları çalışmaz</string>
+    <string name="battery_glyph_label">Pil Glyph\'i</string>
+    <string name="battery_glyph_desc">Şarj olurken Glyph parlaklığı pil seviyesini gösterir</string>
+</resources>
