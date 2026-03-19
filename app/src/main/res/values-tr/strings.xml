@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">dGlyphs</string>
     <string name="main_header">Glyph Arayüzü</string>
     <string name="card_ringtones">Zil Sesleri</string>
     <string name="card_notifications">Bildirimler</string>
@@ -12,34 +11,6 @@
     <string name="style_title">Bildirim Stili</string>
     <string name="apply">Uygula</string>
     <string name="cancel">İptal</string>
-    
-    <string-array name="notif_style_names">
-        <item>Sabit</item>
-        <item>Nabız</item>
-        <item>Nothing Nabız</item>
-        <item>Hızlı Göz Kırpma</item>
-        <item>Oi!</item>
-        <item>Hayır</item>
-        <item>Niye?</item>
-        <item>Ampul Bir</item>
-        <item>Ampul İki</item>
-        <item>Guiro</item>
-        <item>Karalama</item>
-    </string-array>
-
-    <string-array name="call_style_names">
-        <item>Sabit</item>
-        <item>Göz Kırpma</item>
-        <item>Pnömatik</item>
-        <item>Abra</item>
-        <item>Sincaplar</item>
-        <item>Şık</item>
-        <item>Işıma</item>
-        <item>Tenis</item>
-        <item>Kurgu</item>
-        <item>Karalama</item>
-    </string-array>
-
     <string name="root_error_title">Root Hatası</string>
     <string name="root_error_message">Bu uygulama çalışmak için root yetkisi gerektirir. Lütfen root erişimi verin ve uygulamayı yeniden başlatın.</string>
     <string name="exit">Çıkış</string>

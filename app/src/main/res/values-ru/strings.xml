@@ -12,31 +12,6 @@
     <string name="style_title">Стиль уведомлений</string>
     <string name="cancel">Отмена</string>
     <string name="apply">Применить</string>
-    <string-array name="notif_style_names">
-        <item>Статичный</item>
-        <item>Пульс</item>
-        <item>Nothing пульс</item>
-        <item>Быстрое мигание</item>
-        <item>oi!</item>
-        <item>nope</item>
-        <item>why</item>
-        <item>bulb one</item>
-        <item>bulb two</item>
-        <item>guiro</item>
-        <item>squiggle</item>
-    </string-array>
-    <string-array name="call_style_names">
-        <item>Статичный</item>
-        <item>Быстрое мигание</item>
-        <item>pneumatic</item>
-        <item>abra</item>
-        <item>squirrels</item>
-        <item>snaps</item>
-        <item>radiate</item>
-        <item>tennis</item>
-        <item>plot</item>
-        <item>scribble</item>
-    </string-array>
     <string name="root_error_title">Ошибка Root</string>
     <string name="root_error_message">Для работы этого приложения требуются root-права. Предоставьте доступ и перезапустите приложение.</string>
     <string name="exit">Выйти</string>
