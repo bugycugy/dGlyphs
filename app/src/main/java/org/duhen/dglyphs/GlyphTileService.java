@@ -6,10 +6,28 @@ import android.service.quicksettings.TileService;
 
 public class GlyphTileService extends TileService {
 
+    private SharedPreferences prefs;
+    private final SharedPreferences.OnSharedPreferenceChangeListener prefListener =
+            (sharedPreferences, key) -> {
+                if ("master_allow".equals(key)) {
+                    syncTile();
+                }
+            };
+
     @Override
     public void onStartListening() {
         super.onStartListening();
+        prefs = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
         syncTile();
+    }
+
+    @Override
+    public void onStopListening() {
+        super.onStopListening();
+        if (prefs != null) {
+            prefs.unregisterOnSharedPreferenceChangeListener(prefListener);
+        }
     }
 
     @Override
@@ -42,6 +60,7 @@ public class GlyphTileService extends TileService {
 
             if (!isAllowed) {
                 tile.setState(Tile.STATE_UNAVAILABLE);
+                updateHardware(0);
             } else {
                 tile.setState(Tile.STATE_INACTIVE);
                 updateHardware(0);
