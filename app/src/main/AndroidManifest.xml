@@ -82,6 +82,8 @@
 
         <service android:name=".BatteryGlyphService" />
 
+        <service android:name=".VolumeGlyphService" />
+
         <receiver
             android:name=".BootReceiver"
             android:exported="true">

@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean isMasterAllowed;
     private int currentBrightness;
 
-    private MaterialCardView cardNotifications, cardRingtones, cardFlipStyle, cardTurnOff, cardSleepTime, cardBrightness, cardBattery;
+    private MaterialCardView cardNotifications, cardRingtones, cardFlipStyle, cardTurnOff, cardSleepTime, cardBrightness, cardBattery, cardVolume;
     private TextView textCurrentCallStyle, textCurrentNotifStyle, textSleepTime;
-    private MaterialSwitch switchSleepMode, switchAll, switchFlip, switchBattery, switchLockscreenOnly;
+    private MaterialSwitch switchSleepMode, switchAll, switchFlip, switchBattery, switchLockscreenOnly, switchVolume;
     private BrightnessSliderView slider;
     private Runnable previewRunnable;
     private ImageView spacewar;
@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         cardSleepTime = findViewById(R.id.cardSleepTime);
         cardBrightness = findViewById(R.id.cardBrightness);
         cardBattery = findViewById(R.id.cardBattery);
+        cardVolume = findViewById(R.id.cardVolume);
 
         textCurrentCallStyle = findViewById(R.id.textCurrentCallStyle);
         textCurrentNotifStyle = findViewById(R.id.textCurrentNotifStyle);
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         switchFlip = findViewById(R.id.switchFlip);
         switchLockscreenOnly = findViewById(R.id.switchLockscreenOnly);
         switchBattery = findViewById(R.id.switchBattery);
+        switchVolume = findViewById(R.id.switchVolume);
         spacewar = findViewById(R.id.spacewar);
     }
 
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         switchLockscreenOnly.setChecked(prefs.getBoolean("lockscreen_only", false));
         switchSleepMode.setChecked(prefs.getBoolean("sleep_mode_enabled", false));
         switchBattery.setChecked(prefs.getBoolean("battery_glyph_enabled", false));
+        switchVolume.setChecked(prefs.getBoolean("volume_glyph_enabled", false));
         updateStyleLabels();
         updateSleepTimeLabel();
         slider.setValue(mapBrightnessToPosition(currentBrightness));
@@ -166,6 +169,14 @@ public class MainActivity extends AppCompatActivity {
             quickTick(15, 100);
             prefs.edit().putBoolean("battery_glyph_enabled", isChecked).apply();
             Intent intent = new Intent(this, BatteryGlyphService.class);
+            if (isChecked && isMasterAllowed) startService(intent);
+            else stopService(intent);
+        });
+
+        switchVolume.setOnCheckedChangeListener((v, isChecked) -> {
+            quickTick(15, 100);
+            prefs.edit().putBoolean("volume_glyph_enabled", isChecked).apply();
+            Intent intent = new Intent(this, VolumeGlyphService.class);
             if (isChecked && isMasterAllowed) startService(intent);
             else stopService(intent);
         });
@@ -205,11 +216,14 @@ public class MainActivity extends AppCompatActivity {
                 updateHardware(0);
                 stopService(new Intent(this, FlipToGlyphService.class));
                 stopService(new Intent(this, BatteryGlyphService.class));
+                stopService(new Intent(this, VolumeGlyphService.class));
             } else {
                 if (prefs.getBoolean("flip_enabled", false))
                     startService(new Intent(this, FlipToGlyphService.class));
                 if (prefs.getBoolean("battery_glyph_enabled", false))
                     startService(new Intent(this, BatteryGlyphService.class));
+                if (prefs.getBoolean("volume_glyph_enabled", false))
+                    startService(new Intent(this, VolumeGlyphService.class));
             }
             updateTile();
         });
@@ -294,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateCardStates(boolean enabled) {
         float alpha = enabled ? 1.0f : 0.5f;
-        MaterialCardView[] cards = {cardNotifications, cardRingtones, cardBrightness, cardFlipStyle, cardSleepTime, cardTurnOff, cardBattery};
+        MaterialCardView[] cards = {cardNotifications, cardRingtones, cardBrightness, cardFlipStyle, cardSleepTime, cardTurnOff, cardBattery, cardVolume};
         for (MaterialCardView c : cards) {
             c.setEnabled(enabled);
             c.setAlpha(alpha);
@@ -303,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
         switchFlip.setEnabled(enabled);
         switchSleepMode.setEnabled(enabled);
         switchBattery.setEnabled(enabled);
+        switchVolume.setEnabled(enabled);
         switchLockscreenOnly.setEnabled(enabled);
     }
 

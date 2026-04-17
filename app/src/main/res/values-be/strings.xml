@@ -44,4 +44,6 @@
     <string name="turn_off_desc">Glyph-індыкатары не будуць працаваць, калі тэлефон разблакіраваны</string>
     <string name="battery_glyph_label">Glyph батарэя</string>
     <string name="battery_glyph_desc">Яркасць Glyph адлюстроўвае ўзровень зараду пры падключэнні зараднай прылады</string>
+    <string name="volume_glyph_label">Гучнасць Glyphs</string>
+    <string name="volume_glyph_desc">Візуальная індыкацыя ўзроўню гучнасці ў Glyphs</string>
 </resources>

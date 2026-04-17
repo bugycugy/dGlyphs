@@ -21,5 +21,8 @@ public class BootReceiver extends BroadcastReceiver {
         if (prefs.getBoolean("battery_glyph_enabled", false)) {
             context.startService(new Intent(context, BatteryGlyphService.class));
         }
+        if (prefs.getBoolean("volume_glyph_enabled", false)) {
+            context.startService(new Intent(context, VolumeGlyphService.class));
+        }
     }
 }

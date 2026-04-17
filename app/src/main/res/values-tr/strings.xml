@@ -43,4 +43,6 @@
     <string name="turn_off_desc">Telefon kilidi açıkken Glyph ışıkları çalışmaz</string>
     <string name="battery_glyph_label">Pil Glyph\'i</string>
     <string name="battery_glyph_desc">Şarj olurken Glyph parlaklığı pil seviyesini gösterir</string>
+    <string name="volume_glyph_label">Glyphs Ses Seviyesi</string>
+    <string name="volume_glyph_desc">Glyphs üzerinden görsel ses seviyesi göstergesi</string>
 </resources>

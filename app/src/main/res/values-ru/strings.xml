@@ -44,4 +44,6 @@
     <string name="turn_off_desc">Glyph индикаторы не будут работать, если телефон разблокирован</string>
     <string name="battery_glyph_label">Glyph батарея</string>
     <string name="battery_glyph_desc">Яркость Glyph отображает уровень заряда при подключении зарядки</string>
+    <string name="volume_glyph_label">Glyph громкость</string>
+    <string name="volume_glyph_desc">Визуальная индикация громкости</string>
 </resources>

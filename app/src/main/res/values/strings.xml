@@ -44,5 +44,6 @@
     <string name="turn_off_desc">Glyph lights will not work if the phone is unlocked</string>
     <string name="battery_glyph_label">Battery Glyph</string>
     <string name="battery_glyph_desc">Glyph brightness shows battery level while charging</string>
-
+    <string name="volume_glyph_label">Volume Glyph</string>
+    <string name="volume_glyph_desc">Visual volume level indicator</string>
 </resources>
