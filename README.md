@@ -17,15 +17,15 @@ It was originally created for ported roms that don't have Glyphs.
 ## Screenshots (2.1)
 <table>
   <tr>
-    <td><img src="screenshots/main.jpg" width="200"></td>
-    <td><img src="screenshots/main_two.jpg" width="200"></td>
-    <td><img src="screenshots/ringtone_styles.jpg" width="200"></td>
-    <td><img src="screenshots/sleep_mode.jpg" width="200"></td>
+    <td><img src="screenshots/main.png" width="200"></td>
+    <td><img src="screenshots/main_two.png" width="200"></td>
+    <td><img src="screenshots/notif_styles.png" width="200"></td>
+    <td><img src="screenshots/sleep_mode.png" width="200"></td>
   </tr>
   <tr>
     <td align="center">Main Activity</td>
     <td align="center">Main Activity 2</td>
-    <td align="center">Ringtone Styles</td>
+    <td align="center">Notifications Styles</td>
     <td align="center">Sleep Mode Activity</td>
   </tr>
 </table>
