@@ -41,7 +41,7 @@ public class ExtraActivity extends AppCompatActivity {
         sliderTorch.addOnChangeListener((slider, value, fromUser) -> {
             updateTorchBrightnessLabel(value);
             if (fromUser) {
-                quickTick(10, 50);
+                VibratorUtils.quickTick(vibrator, 15, 100);
                 prefs.edit().putInt("torch_brightness", mapPositionToBrightness(value)).apply();
             }
         });
@@ -64,10 +64,5 @@ public class ExtraActivity extends AppCompatActivity {
 
     private float mapBrightnessToPosition(int b) {
         return b >= 4095 ? 4f : b >= 2048 ? 3f : b >= 1024 ? 2f : 1f;
-    }
-
-    private void quickTick(int d, int a) {
-        if (vibrator != null && vibrator.hasVibrator())
-            vibrator.vibrate(VibrationEffect.createOneShot(d, a));
     }
 }

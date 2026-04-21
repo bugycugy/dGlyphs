@@ -39,7 +39,6 @@ public class SleepModeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
         findViewById(R.id.btnBack).setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
         tvStart = findViewById(R.id.tvStartTime);
         tvEnd = findViewById(R.id.tvEndTime);
@@ -47,7 +46,7 @@ public class SleepModeActivity extends AppCompatActivity {
         MaterialSwitch sw = findViewById(R.id.switchSleepInternal);
         sw.setChecked(prefs.getBoolean("sleep_mode_enabled", false));
         sw.setOnCheckedChangeListener((v, chk) -> {
-            quickTick(20, 100);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("sleep_mode_enabled", chk).apply();
         });
 
@@ -64,7 +63,7 @@ public class SleepModeActivity extends AppCompatActivity {
             updateDayUI(btn, selectedDays.contains(dId));
 
             btn.setOnClickListener(v -> {
-                quickTick(10, 80);
+                VibratorUtils.quickTick(vibrator, 15, 100);
                 if (selectedDays.contains(dId)) selectedDays.remove(dId);
                 else selectedDays.add(dId);
 
@@ -101,13 +100,8 @@ public class SleepModeActivity extends AppCompatActivity {
             String val = String.format("%02d:%02d", picker.getHour(), picker.getMinute());
             target.setText(val);
             prefs.edit().putString(isStart ? "sleep_start" : "sleep_end", val).apply();
-            quickTick(15, 80);
+            VibratorUtils.quickTick(vibrator, 15, 100);
         });
         picker.show(getSupportFragmentManager(), "picker");
-    }
-
-    private void quickTick(int d, int a) {
-        if (vibrator != null && vibrator.hasVibrator())
-            vibrator.vibrate(VibrationEffect.createOneShot(d, a));
     }
 }

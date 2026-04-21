@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.service.quicksettings.TileService;
@@ -186,12 +185,12 @@ public class MainActivity extends AppCompatActivity {
         cardSleepTime.setOnClickListener(v -> startActivity(new Intent(this, SleepModeActivity.class)));
 
         switchSleepMode.setOnCheckedChangeListener((v, isChecked) -> {
-            quickTick(20, 100);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("sleep_mode_enabled", isChecked).apply();
         });
 
         switchBattery.setOnCheckedChangeListener((v, isChecked) -> {
-            quickTick(15, 100);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("battery_glyph_enabled", isChecked).apply();
             Intent intent = new Intent(this, BatteryGlyphService.class);
             if (isChecked && isMasterAllowed) startService(intent);
@@ -199,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         switchVolume.setOnCheckedChangeListener((v, isChecked) -> {
-            quickTick(15, 100);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("volume_glyph_enabled", isChecked).apply();
             Intent intent = new Intent(this, VolumeGlyphService.class);
             if (isChecked && isMasterAllowed) startService(intent);
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         switchLockscreenOnly.setOnCheckedChangeListener((v, isChecked) -> {
-            quickTick(15, 100);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("lockscreen_only", isChecked).apply();
         });
 
@@ -222,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         switchFlip.setChecked(prefs.getBoolean("flip_enabled", false));
 
         switchFlip.setOnCheckedChangeListener((v, isChecked) -> {
-            quickTick(20, 100);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("flip_enabled", isChecked).apply();
             if (isMasterAllowed) {
                 Intent intent = new Intent(this, FlipToGlyphService.class);
@@ -235,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         switchAll.setOnCheckedChangeListener((v, isChecked) -> {
-            quickTick(15, 120);
+            VibratorUtils.quickTick(vibrator, 15, 100);
             isMasterAllowed = isChecked;
             prefs.edit().putBoolean("master_allow", isChecked).apply();
             updateCardStates(isChecked);
@@ -261,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             if (fromUser) {
                 int brightness = mapPositionToBrightness(value);
                 if (brightness != currentBrightness) {
-                    quickTick(10, 50);
+                    VibratorUtils.quickTick(vibrator, 10, 50);
                     currentBrightness = brightness;
                     prefs.edit().putInt("brightness", currentBrightness).apply();
                     if (isMasterAllowed) {
@@ -298,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
                             .apply();
                     updateStyleLabels();
                     GlyphEffects.stop();
-                    quickTick(15, 100);
+                    VibratorUtils.quickTick(vibrator, 15, 100);
                 })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> GlyphEffects.stop())
                 .show();
@@ -347,11 +346,6 @@ public class MainActivity extends AppCompatActivity {
         switchBattery.setEnabled(enabled);
         switchVolume.setEnabled(enabled);
         switchLockscreenOnly.setEnabled(enabled);
-    }
-
-    private void quickTick(int d, int a) {
-        if (vibrator != null && vibrator.hasVibrator())
-            vibrator.vibrate(VibrationEffect.createOneShot(d, a));
     }
 
     private void updateHardware(int val) {

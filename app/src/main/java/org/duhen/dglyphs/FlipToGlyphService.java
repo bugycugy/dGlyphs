@@ -161,11 +161,7 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
         originalRingerMode = audioManager.getRingerMode();
         audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 
-        if (vibrator != null && vibrator.hasVibrator()) {
-            long[] timings = {0, 80, 60, 120};
-            int[] amplitudes = {0, 220, 0, 255};
-            vibrator.vibrate(VibrationEffect.createWaveform(timings, amplitudes, -1));
-        }
+        VibratorUtils.quickTick(vibrator, 25, 200);
 
         if (SleepGuard.isBlocked(prefs)) return;
         String style = prefs.getString("flip_style_value", "");
