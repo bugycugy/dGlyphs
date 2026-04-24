@@ -54,4 +54,6 @@
     <string name="brightness_medium">Orta</string>
     <string name="brightness_high">Yüksek</string>
     <string name="brightness_max">Maksimum</string>
+    <string name="style_unknown">Bilinmiyor</string>
+    <string name="vibration_intensity">Titreşim yoğunluğu</string>
 </resources>

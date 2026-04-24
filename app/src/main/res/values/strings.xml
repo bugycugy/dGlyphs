@@ -55,4 +55,6 @@
     <string name="brightness_medium">Medium</string>
     <string name="brightness_high">High</string>
     <string name="brightness_max">Max</string>
+    <string name="style_unknown">Unknown</string>
+    <string name="vibration_intensity">Vibration intensity</string>
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false">
+
+    <ImageView
+        android:id="@+id/glyphCamera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:focusable="false"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/glyphDiagonal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:focusable="false"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/glyphMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:focusable="false"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/glyphLine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:focusable="false"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/glyphDot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:focusable="false"
+        android:scaleType="fitCenter" />
+
+</FrameLayout>

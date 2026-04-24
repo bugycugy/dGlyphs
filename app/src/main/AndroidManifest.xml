@@ -36,6 +36,11 @@
             android:name=".ExtraActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".StyleSelectorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DGlyphs" />
+
         <service
             android:name=".MasterTileService"
             android:icon="@drawable/ic_master_qs"

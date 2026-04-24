@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 
 public class FlipToGlyphService extends Service implements SensorEventListener {
@@ -20,7 +19,6 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
     public static final String ACTION_NOTIFICATION_GLYPH = "org.duhen.dglyphs.ACTION_NOTIFICATION_GLYPH";
     public static final String ACTION_CALL_GLYPH = "org.duhen.dglyphs.ACTION_CALL_GLYPH";
     public static final String ACTION_STOP_CALL_GLYPH = "org.duhen.dglyphs.ACTION_STOP_CALL_GLYPH";
-    private static final String PREF_BLINK_STYLE_VALUE = "glyph_blink_style";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private SensorManager sensorManager;
@@ -43,7 +41,8 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
 
         Sensor accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Sensor prox = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        if (accel != null) sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
+        if (accel != null)
+            sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
         if (prox != null) sensorManager.registerListener(this, prox, SensorManager.SENSOR_DELAY_UI);
 
         wakeLock = ((PowerManager) getSystemService(POWER_SERVICE))
@@ -56,7 +55,6 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
             stopSelf();
             return START_NOT_STICKY;
         }
-
         if (intent != null && intent.getAction() != null) {
             switch (intent.getAction()) {
                 case ACTION_NOTIFICATION_GLYPH:
@@ -74,23 +72,18 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
     }
 
     private void acquireWakeLock(long timeoutMs) {
-        if (wakeLock != null && !wakeLock.isHeld()) {
-            wakeLock.acquire(timeoutMs);
-        }
+        if (wakeLock != null && !wakeLock.isHeld()) wakeLock.acquire(timeoutMs);
     }
 
     private void releaseWakeLock() {
-        if (wakeLock != null && wakeLock.isHeld()) {
-            wakeLock.release();
-        }
+        if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
     }
 
     private void triggerNotification() {
         if (SleepGuard.isBlocked(prefs)) return;
-        String style = prefs.getString(PREF_BLINK_STYLE_VALUE, "");
-        if (style.isEmpty()) return;
         acquireWakeLock(3000);
-        GlyphEffects.play(this, "notification", style, vibrator, prefs.getInt("brightness", 2048));
+        GlyphEffects.playFromPref(this, "notif_style", GlyphEffects.FOLDER_NOTIF,
+                vibrator, prefs.getInt("brightness", 2048));
     }
 
     private void startCallLoop() {
@@ -102,18 +95,11 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
 
     private void scheduleNextCallCycle() {
         if (!isRinging) return;
-        String style = prefs.getString("call_style_value", "");
-        if (style.isEmpty()) return;
-
         acquireWakeLock(5000);
-        GlyphEffects.play(this, "call", style, vibrator, prefs.getInt("brightness", 2048));
-
+        GlyphEffects.playFromPref(this, "call_style", GlyphEffects.FOLDER_CALL,
+                vibrator, prefs.getInt("brightness", 2048));
         callLoopRunnable = this::scheduleNextCallCycle;
-        handler.postDelayed(callLoopRunnable, getCallStyleDuration());
-    }
-
-    private long getCallStyleDuration() {
-        return 4000;
+        handler.postDelayed(callLoopRunnable, 4000);
     }
 
     private void stopCallLoop() {
@@ -153,21 +139,21 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
     }
 
     private void activateFlipMode() {
-        if (prefs.getBoolean("lockscreen_only", false) && GlyphManager.isUserActive(this)) {
-            return;
-        }
+        if (prefs.getBoolean("lockscreen_only", false) && GlyphManager.isUserActive(this)) return;
         isActive = true;
         activationRunnable = null;
         originalRingerMode = audioManager.getRingerMode();
         audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 
-        VibratorUtils.quickTick(vibrator, 25, 200);
+        int flipStep = VibratorUtils.readStep(prefs, VibratorUtils.KEY_VIB_FLIP);
+        VibratorUtils.quickTick(vibrator,
+                VibratorUtils.durationForStep(flipStep),
+                VibratorUtils.amplitudeForStep(flipStep));
 
         if (SleepGuard.isBlocked(prefs)) return;
-        String style = prefs.getString("flip_style_value", "");
-        if (style.isEmpty()) return;
         acquireWakeLock(3000);
-        GlyphEffects.play(this, "notification", style, vibrator, prefs.getInt("brightness", 2048));
+        GlyphEffects.playFromPref(this, "flip_style", GlyphEffects.FOLDER_NOTIF,
+                vibrator, prefs.getInt("brightness", 2048));
     }
 
     private void deactivateFlipMode() {
@@ -179,10 +165,13 @@ public class FlipToGlyphService extends Service implements SensorEventListener {
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 
     @Override
-    public IBinder onBind(Intent intent) { return null; }
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
     @Override
     public void onDestroy() {

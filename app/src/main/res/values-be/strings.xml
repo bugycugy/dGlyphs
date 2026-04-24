@@ -55,4 +55,6 @@
     <string name="brightness_medium">Сярэдняя</string>
     <string name="brightness_high">Высокая</string>
     <string name="brightness_max">Максімум</string>
+    <string name="style_unknown">Невядомы</string>
+    <string name="vibration_intensity">Інтэнсіўнасць вібрацыі</string>
 </resources>

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.service.quicksettings.TileService;
@@ -22,30 +24,40 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.topjohnwu.superuser.Shell;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PREF_BLINK_STYLE = "glyph_blink_style";
-    private final android.os.Handler previewHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+    private static final String KEY_CALL_STYLE = "call_style";
+    private static final String KEY_NOTIF_STYLE = "notif_style";
+    private static final String KEY_FLIP_STYLE = "flip_style";
+    private static final String KEY_MASTER_ALLOW = "master_allow";
+    private static final String KEY_BRIGHTNESS = "brightness";
 
-    private String[] notifStyleValues;
-    private String[] callStyleValues;
-
+    private final Handler previewHandler = new Handler(Looper.getMainLooper());
+    private final androidx.activity.result.ActivityResultLauncher<Intent> flipStyleLauncher =
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                    });
     private SharedPreferences prefs;
+    private final androidx.activity.result.ActivityResultLauncher<Intent> notifStyleLauncher =
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == RESULT_OK) refreshNotifStyleLabel();
+                    });
     private Vibrator vibrator;
     private boolean isMasterAllowed;
     private int currentBrightness;
-
     private MaterialCardView cardNotifications, cardRingtones, cardFlipStyle, cardTurnOff, cardSleepTime, cardBrightness, cardBattery, cardVolume, cardExtra;
     private TextView textCurrentCallStyle, textCurrentNotifStyle, textSleepTime;
+    private final androidx.activity.result.ActivityResultLauncher<Intent> callStyleLauncher =
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == RESULT_OK) refreshCallStyleLabel();
+                    });
     private MaterialSwitch switchSleepMode, switchAll, switchFlip, switchBattery, switchLockscreenOnly, switchVolume;
     private BrightnessSliderView slider;
     private final SharedPreferences.OnSharedPreferenceChangeListener rootPrefListener = (sharedPrefs, key) -> {
-        if ("master_allow".equals(key)) {
-            boolean newValue = sharedPrefs.getBoolean("master_allow", false);
+        if (KEY_MASTER_ALLOW.equals(key)) {
+            boolean newValue = sharedPrefs.getBoolean(KEY_MASTER_ALLOW, false);
             runOnUiThread(() -> {
                 if (switchAll != null && switchAll.isChecked() != newValue) {
                     isMasterAllowed = newValue;
@@ -55,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     };
-    private Runnable previewRunnable;
     private ImageView spacewar;
+    private Runnable previewRunnable;
+
+    private static String lastSegment(String s) {
+        if (s == null) return "";
+        int idx = s.lastIndexOf('/');
+        return idx >= 0 ? s.substring(idx + 1) : s;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
         vibrator = getSystemService(Vibrator.class);
-        notifStyleValues = loadStyleNames("notification");
-        callStyleValues = loadStyleNames("call");
 
         initViews();
 
         Shell.getShell(shell -> {
             if (shell.isRoot()) {
                 runOnUiThread(() -> {
-                    isMasterAllowed = prefs.getBoolean("master_allow", false);
-                    currentBrightness = prefs.getInt("brightness", 2048);
+                    isMasterAllowed = prefs.getBoolean(KEY_MASTER_ALLOW, false);
+                    currentBrightness = prefs.getInt(KEY_BRIGHTNESS, 2048);
                     setupInitialState();
                     setupListeners();
                     checkAllPermissions();
@@ -93,21 +109,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private String[] loadStyleNames(String folder) {
-        try {
-            String[] files = getAssets().list(folder);
-            if (files == null || files.length == 0) return new String[]{};
-            List<String> names = new ArrayList<>();
-            for (String f : files) {
-                if (f.endsWith(".csv")) {
-                    names.add(f.replace(".csv", ""));
-                }
-            }
-            Collections.sort(names);
-            return names.toArray(new String[0]);
-        } catch (Exception e) {
-            return new String[]{};
-        }
+    private void refreshCallStyleLabel() {
+        String val = prefs.getString(KEY_CALL_STYLE, null);
+        textCurrentCallStyle.setText(val != null ? lastSegment(val) : getString(R.string.style_unknown));
+    }
+
+    private void refreshNotifStyleLabel() {
+        String val = prefs.getString(KEY_NOTIF_STYLE, null);
+        textCurrentNotifStyle.setText(val != null ? lastSegment(val) : getString(R.string.style_unknown));
     }
 
     private void initViews() {
@@ -141,8 +150,10 @@ public class MainActivity extends AppCompatActivity {
         switchSleepMode.setChecked(prefs.getBoolean("sleep_mode_enabled", false));
         switchBattery.setChecked(prefs.getBoolean("battery_glyph_enabled", false));
         switchVolume.setChecked(prefs.getBoolean("volume_glyph_enabled", false));
+
         applyDefaultStylesIfNeeded();
-        updateStyleLabels();
+        refreshCallStyleLabel();
+        refreshNotifStyleLabel();
         updateSleepTimeLabel();
         slider.setValue(mapBrightnessToPosition(currentBrightness));
         updateOutlineAlpha(slider.getValue());
@@ -152,43 +163,56 @@ public class MainActivity extends AppCompatActivity {
     private void applyDefaultStylesIfNeeded() {
         SharedPreferences.Editor editor = prefs.edit();
         boolean changed = false;
-
-        if (!prefs.contains(PREF_BLINK_STYLE) && notifStyleValues.length > 0) {
-            editor.putString(PREF_BLINK_STYLE, notifStyleValues[0]);
-            editor.putInt("glyph_blink_style_idx", 0);
-            changed = true;
+        if (!prefs.contains(KEY_NOTIF_STYLE)) {
+            String first = firstCsvName("notification");
+            if (first != null) {
+                editor.putString(KEY_NOTIF_STYLE, "notification/" + first);
+                changed = true;
+            }
         }
-
-        if (!prefs.contains("call_style_value") && callStyleValues.length > 0) {
-            editor.putString("call_style_value", callStyleValues[0]);
-            editor.putInt("call_style_idx", 0);
-            changed = true;
+        if (!prefs.contains(KEY_CALL_STYLE)) {
+            String first = firstCsvName("call");
+            if (first != null) {
+                editor.putString(KEY_CALL_STYLE, "call/" + first);
+                changed = true;
+            }
         }
-
-        if (!prefs.contains("flip_style_value") && notifStyleValues.length > 0) {
-            editor.putString("flip_style_value", notifStyleValues[0]);
-            editor.putInt("flip_style_idx", 0);
-            changed = true;
+        if (!prefs.contains(KEY_FLIP_STYLE)) {
+            String first = firstCsvName("notification");
+            if (first != null) {
+                editor.putString(KEY_FLIP_STYLE, "notification/" + first);
+                changed = true;
+            }
         }
         if (changed) editor.apply();
     }
 
+    private String firstCsvName(String folder) {
+        try {
+            String[] files = getAssets().list(folder);
+            if (files == null) return null;
+            for (String f : files) {
+                if (f.endsWith(".csv")) return f.replace(".csv", "");
+            }
+        } catch (Exception ignored) {
+        }
+        return null;
+    }
+
     private void setupListeners() {
-
-        cardNotifications.setOnClickListener(v -> showStyleDialog(
-                R.string.card_notifications, "glyph_blink_style_idx", PREF_BLINK_STYLE, "notification", notifStyleValues));
-        cardRingtones.setOnClickListener(v -> showStyleDialog(
-                R.string.card_ringtones, "call_style_idx", "call_style_value", "call", callStyleValues));
-        cardFlipStyle.setOnClickListener(v -> showStyleDialog(
-                R.string.flip_to_glyph_label, "flip_style_idx", "flip_style_value", "notification", notifStyleValues));
-
+        cardRingtones.setOnClickListener(v ->
+                callStyleLauncher.launch(StyleSelectorActivity.ringtonesIntent(this)));
+        cardNotifications.setOnClickListener(v ->
+                notifStyleLauncher.launch(StyleSelectorActivity.notificationsIntent(this)));
+        cardFlipStyle.setOnClickListener(v ->
+                flipStyleLauncher.launch(StyleSelectorActivity.flipIntent(this)));
         cardSleepTime.setOnClickListener(v -> startActivity(new Intent(this, SleepModeActivity.class)));
+        cardExtra.setOnClickListener(v -> startActivity(new Intent(this, ExtraActivity.class)));
 
         switchSleepMode.setOnCheckedChangeListener((v, isChecked) -> {
             VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("sleep_mode_enabled", isChecked).apply();
         });
-
         switchBattery.setOnCheckedChangeListener((v, isChecked) -> {
             VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("battery_glyph_enabled", isChecked).apply();
@@ -196,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
             if (isChecked && isMasterAllowed) startService(intent);
             else stopService(intent);
         });
-
         switchVolume.setOnCheckedChangeListener((v, isChecked) -> {
             VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("volume_glyph_enabled", isChecked).apply();
@@ -204,22 +227,16 @@ public class MainActivity extends AppCompatActivity {
             if (isChecked && isMasterAllowed) startService(intent);
             else stopService(intent);
         });
-
         switchLockscreenOnly.setOnCheckedChangeListener((v, isChecked) -> {
             VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("lockscreen_only", isChecked).apply();
         });
 
-        cardExtra.setOnClickListener(v ->
-                startActivity(new Intent(this, ExtraActivity.class)));
-
         setupLogicSwitches();
-
     }
 
     private void setupLogicSwitches() {
         switchFlip.setChecked(prefs.getBoolean("flip_enabled", false));
-
         switchFlip.setOnCheckedChangeListener((v, isChecked) -> {
             VibratorUtils.quickTick(vibrator, 15, 100);
             prefs.edit().putBoolean("flip_enabled", isChecked).apply();
@@ -236,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         switchAll.setOnCheckedChangeListener((v, isChecked) -> {
             VibratorUtils.quickTick(vibrator, 15, 100);
             isMasterAllowed = isChecked;
-            prefs.edit().putBoolean("master_allow", isChecked).apply();
+            prefs.edit().putBoolean(KEY_MASTER_ALLOW, isChecked).apply();
             updateCardStates(isChecked);
             if (!isChecked) {
                 GlyphEffects.stop();
@@ -262,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
                 if (brightness != currentBrightness) {
                     VibratorUtils.quickTick(vibrator, 10, 50);
                     currentBrightness = brightness;
-                    prefs.edit().putInt("brightness", currentBrightness).apply();
+                    prefs.edit().putInt(KEY_BRIGHTNESS, currentBrightness).apply();
                     if (isMasterAllowed) {
                         if (previewRunnable != null)
                             previewHandler.removeCallbacks(previewRunnable);
@@ -273,45 +290,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void showStyleDialog(int titleRes, String idxKey, String valKey, String folder, String[] values) {
-        if (values.length == 0) return;
-
-        int currentIdx = Math.min(prefs.getInt(idxKey, 0), values.length - 1);
-        final int[] selectedIdx = {currentIdx};
-
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(titleRes)
-                .setSingleChoiceItems(values, currentIdx, (dialog, which) -> {
-                    selectedIdx[0] = which;
-                    if (isMasterAllowed) {
-                        GlyphEffects.play(this, folder, values[which], vibrator, currentBrightness);
-                    }
-                })
-                .setPositiveButton(R.string.apply, (dialog, which) -> {
-                    int finalIdx = selectedIdx[0];
-                    prefs.edit()
-                            .putInt(idxKey, finalIdx)
-                            .putString(valKey, values[finalIdx])
-                            .apply();
-                    updateStyleLabels();
-                    GlyphEffects.stop();
-                    VibratorUtils.quickTick(vibrator, 15, 100);
-                })
-                .setNegativeButton(R.string.cancel, (dialog, which) -> GlyphEffects.stop())
-                .show();
-    }
-
-    private void updateStyleLabels() {
-        int nIdx = prefs.getInt("glyph_blink_style_idx", 0);
-        int cIdx = prefs.getInt("call_style_idx", 0);
-        int fIdx = prefs.getInt("flip_style_idx", 0);
-
-        if (notifStyleValues.length > 0)
-            textCurrentNotifStyle.setText(notifStyleValues[Math.min(nIdx, notifStyleValues.length - 1)]);
-        if (callStyleValues.length > 0)
-            textCurrentCallStyle.setText(callStyleValues[Math.min(cIdx, callStyleValues.length - 1)]);
     }
 
     private void checkAllPermissions() {
@@ -354,15 +332,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateTile() {
         try {
-            TileService.requestListeningState(this,
-                    new ComponentName(this, MasterTileService.class));
-
-            TileService.requestListeningState(this,
-                    new ComponentName(this, GlyphTileService.class));
-
-            TileService.requestListeningState(this,
-                    new ComponentName(this, RandomGlyphTileService.class));
-
+            TileService.requestListeningState(this, new ComponentName(this, MasterTileService.class));
+            TileService.requestListeningState(this, new ComponentName(this, GlyphTileService.class));
+            TileService.requestListeningState(this, new ComponentName(this, RandomGlyphTileService.class));
         } catch (Exception ignored) {
         }
     }
@@ -414,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (prefs != null) {
-            isMasterAllowed = prefs.getBoolean("master_allow", false);
+            isMasterAllowed = prefs.getBoolean(KEY_MASTER_ALLOW, false);
             setupInitialState();
             prefs.registerOnSharedPreferenceChangeListener(rootPrefListener);
         }
